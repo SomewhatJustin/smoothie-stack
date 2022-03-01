@@ -1,0 +1,36 @@
+body {
+  font-family: 'Rubik', sans-serif;
+  max-width: 1000px;
+  display: inline-block;
+  position: absolute;
+}
+
+
+input, label {
+  display: block;
+}
+
+#body div {
+  float: left;
+}
+
+#body #share-zone {
+  float: none;
+}
+
+#add-btn {
+  padding: 5px;
+  border: none;
+  border-radius: 210px;
+  margin: 0px;
+}
+
+#add-btn-div {
+  position: absolute;
+  bottom: 17px;
+  right: -35px;
+}
+
+#add-btn:hover {
+  background: #fafafa;
+}
