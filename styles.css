@@ -18,6 +18,10 @@ input, label {
   float: none;
 }
 
+#body #share-zone button {
+  margin-top: 10px;
+}
+
 #add-btn {
   padding: 5px;
   border: none;
