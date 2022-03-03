@@ -1,6 +1,8 @@
 body {
   font-family: 'Rubik', sans-serif;
-  max-width: 1000px;
+  min-width: 370px;
+  width: 100%;
+  max-width: 700px;
   display: inline-block;
   position: absolute;
 }
@@ -27,13 +29,11 @@ body {
   flex: 1;
 }
 
-#share-zone button {
-  margin-top: 10px;
-}
-
 #add-btn {
   padding: 5px;
   border: none;
   margin: 0px;
   align-self: flex-end;
+  margin-top: auto;
+  margin-left: 10px;
 }
