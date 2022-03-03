@@ -16,24 +16,30 @@
 </head>
 
 <body>
-  <div id="header">
-    <h1>My Smoothie Stack</h1>
-    <h2>Whatcha drinkin'?</h2>
-  </div>
-  <div id="body">
-    <div>
-      <h3>Ingredient</h3>
-      <input id="ingredient-input">
+  <div id="page-wrapper">
+    <div class="row">
+      <div id="header">
+        <h1>My Smoothie Stack</h1>
+        <h2>Whatcha drinkin'?</h2>
+      </div>
     </div>
-    <div>
-      <h3>Amount</h3>
-      <input id="amount-input">
+    <div class="row">
+      <div class="column">
+        <h3>Ingredient</h3>
+        <input id="ingredient-input">
+      </div>
+      <div class="column">
+        <h3>Amount</h3>
+        <input id="amount-input">
+      </div>
+      <div class="column">
+        <button id="add-btn"><i class="fa-solid fa-plus"></i></button>
+      </div>
     </div>
-    <div id="add-btn-div">
-      <button id="add-btn"><i class="fa-solid fa-plus"></i></button>
-    </div>
-    <div id="share-zone">
-      <button>Share</button>
+    <div class="row">
+      <div id="share-zone">
+        <button>Share</button>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>

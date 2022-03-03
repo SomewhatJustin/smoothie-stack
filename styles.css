@@ -5,36 +5,35 @@ body {
   position: absolute;
 }
 
-
-input, label {
-  display: block;
+#add-btn:hover {
+  background: #fafafa;
 }
 
-#body div {
-  float: left;
+#page-wrapper {
+  margin: 10px;
 }
 
-#body #share-zone {
-  float: none;
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-#body #share-zone button {
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+#share-zone button {
   margin-top: 10px;
 }
 
 #add-btn {
   padding: 5px;
   border: none;
-  border-radius: 210px;
   margin: 0px;
-}
-
-#add-btn-div {
-  position: absolute;
-  bottom: 17px;
-  right: -35px;
-}
-
-#add-btn:hover {
-  background: #fafafa;
+  align-self: flex-end;
 }
