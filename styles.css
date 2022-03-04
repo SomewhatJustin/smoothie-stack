@@ -5,6 +5,28 @@ body {
   max-width: 700px;
   display: inline-block;
   position: absolute;
+  background: #8a2be2;
+  color: #fafafa;
+}
+
+h2 {
+  font-weight: 300;
+}
+
+input {
+  margin: 5px 10px 5px 0px;
+  height: 28px;
+  padding: 0px 7px;
+}
+
+input, button {
+  border: black solid 1px;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+}
+
+button {
+  color: black;
 }
 
 #add-btn:hover {
@@ -31,11 +53,13 @@ body {
 
 #add-btn {
   padding: 5px;
-  border: none;
   margin: 0px;
   align-self: baseline;
   margin-top: auto;
   margin-left: 10px;
+  margin-bottom: 5px;
+  width: 30px;
+  height: 30px;
 }
 
 #share-zone button {
