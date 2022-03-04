@@ -64,6 +64,11 @@ button {
 
 #share-zone button {
   margin: 5px 0px;
+  width: 100%;
+  border: none;
+  background: #60992D;
+  height: 40px;
+  font-size: 16px;
 }
 
 #success-text {
