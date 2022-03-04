@@ -13,11 +13,11 @@ function checkURL() {
     let urlItems = (decodeURIComponent(splitURL[1]).split(","))
     console.log(urlItems)
 
-    for (let i = 0; i < urlItems.length; i += 2) {
+    for (let i = 0; i < urlItems.length / 2; i++) {
       ingredientItems.innerHTML += `<p>${urlItems[i]}</p`
     }
 
-    for (let j = 1; j < urlItems.length; j += 2) {
+    for (let j = 0 + urlItems.length / 2; j < urlItems.length; j++) {
       amountItems.innerHTML += `<p>${urlItems[j]}</p`
     }
   }
@@ -35,10 +35,6 @@ function getInputs() {
   return [ingredientInput, amountInput]
 }
 
-function share() {
-  // Will need an array of ingredients and amounts
-}
-
 addBtn.addEventListener("click", function () {
   let newItems = getInputs()
   ingredientItems.innerHTML += `<p>${newItems[0]}<p>`
@@ -49,5 +45,11 @@ shareBtn.addEventListener("click", function () {
   let fullList = encodeURIComponent(ingredientList.concat(amountList))
   window.history.replaceState(null, "", `?share=${fullList}`)
   // console.log(decodeURIComponent(fullList))
+  // navigator.clipboard.writeText(window.location.href);
+
+  let clipboardURL = window.location.href
+  navigator.clipboard.writeText(clipboardURL)
+
+  document.getElementById("success-text").style.visibility = "visible"
 })
 
