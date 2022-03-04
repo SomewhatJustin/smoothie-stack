@@ -1,18 +1,53 @@
 const addBtn = document.getElementById("add-btn")
-console.log(addBtn)
+const shareBtn = document.getElementById("share-btn")
 let ingredientInput = ""
 let amountInput = ""
 let ingredientItems = document.getElementById("ingredient-items")
 let amountItems = document.getElementById("amount-items")
+let ingredientList = []
+let amountList = []
+
+function checkURL() {
+  if (window.location.href.includes("share")) {
+    let splitURL = (window.location.href.split('='))
+    let urlItems = (decodeURIComponent(splitURL[1]).split(","))
+    console.log(urlItems)
+
+    for (let i = 0; i < urlItems.length; i += 2) {
+      ingredientItems.innerHTML += `<p>${urlItems[i]}</p`
+    }
+
+    for (let j = 1; j < urlItems.length; j += 2) {
+      amountItems.innerHTML += `<p>${urlItems[j]}</p`
+    }
+  }
+}
+
+checkURL()
 
 function getInputs() {
   ingredientInput = document.getElementById("ingredient-input").value
   amountInput = document.getElementById("amount-input").value
-  console.log(`${ingredientInput}, ${amountInput}`)
+  ingredientList.push(ingredientInput)
+  amountList.push(amountInput)
+  document.getElementById("ingredient-input").value = ""
+  document.getElementById("amount-input").value = ""
+  return [ingredientInput, amountInput]
+}
+
+function share() {
+  // Will need an array of ingredients and amounts
 }
 
 addBtn.addEventListener("click", function () {
-  getInputs()
-  ingredientItems.innerHTML += `<p>${ingredientInput}<p>`
-  amountItems.innerHTML += `<p>${amountInput}<p>`
+  let newItems = getInputs()
+  ingredientItems.innerHTML += `<p>${newItems[0]}<p>`
+  amountItems.innerHTML += `<p>${newItems[1]}<p>`
 })
+
+shareBtn.addEventListener("click", function () {
+  let fullList = encodeURIComponent(ingredientList.concat(amountList))
+  window.history.replaceState(null, "", `?share=${fullList}`)
+  // console.log(decodeURIComponent(fullList))
+})
+
