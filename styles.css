@@ -13,6 +13,11 @@ h2 {
   font-weight: 300;
 }
 
+#ingredient-items p, #amount-items p {
+  height: 20px;
+  margin-bottom: 35px;
+}
+
 input {
   margin: 5px 10px 5px 0px;
   height: 28px;
