@@ -7,6 +7,7 @@ let amountItems = document.getElementById("amount-items")
 let ingredientList = []
 let amountList = []
 
+
 function checkURL() {
   if (window.location.href.includes("share")) {
     let splitURL = (window.location.href.split('='))
@@ -37,8 +38,8 @@ function getInputs() {
 
 addBtn.addEventListener("click", function () {
   let newItems = getInputs()
-  ingredientItems.innerHTML += `<p>${newItems[0]}<p>`
-  amountItems.innerHTML += `<p>${newItems[1]}<p>`
+  ingredientItems.innerHTML += `<p class="ingredient">${newItems[0]}</p>`
+  amountItems.innerHTML += `<p class="amount">${newItems[1]}</p>`
 })
 
 shareBtn.addEventListener("click", function () {
