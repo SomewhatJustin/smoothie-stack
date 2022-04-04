@@ -67,13 +67,21 @@ button {
   height: 30px;
 }
 
-#share-zone button {
+#share-zone, #clear-zone {
+  margin-right: 10px;
+}
+
+#share-zone button, #clear-zone button {
   margin: 5px 0px;
   width: 100%;
   border: none;
   background: #60992D;
   height: 40px;
   font-size: 16px;
+}
+
+#clear-zone button {
+  background: #ff5252;
 }
 
 #success-text {

@@ -1,5 +1,6 @@
 const addBtn = document.getElementById("add-btn")
 const shareBtn = document.getElementById("share-btn")
+const clearBtn = document.getElementById("clear-btn")
 let ingredientInput = ""
 let amountInput = ""
 let ingredientItems = document.getElementById("ingredient-items")
@@ -52,5 +53,12 @@ shareBtn.addEventListener("click", function () {
   navigator.clipboard.writeText(clipboardURL)
 
   document.getElementById("success-text").style.visibility = "visible"
+})
+
+clearBtn.addEventListener("click", function () {
+  ingredientItems.innerHTML = ``
+  amountItems.innerHTML = ``
+  ingredientList = []
+  amountList = []
 })
 
