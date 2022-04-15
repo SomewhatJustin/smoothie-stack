@@ -13,7 +13,7 @@ function checkURL() {
   if (window.location.href.includes("share")) {
     let splitURL = (window.location.href.split('='))
     let urlItems = (decodeURIComponent(splitURL[1]).split(","))
-    console.log(urlItems)
+    console.log(urlItems.length)
 
     for (let i = 0; i < urlItems.length / 2; i++) {
       ingredientItems.innerHTML += `<p>${urlItems[i]}</p`
@@ -45,14 +45,16 @@ addBtn.addEventListener("click", function () {
 
 shareBtn.addEventListener("click", function () {
   let fullList = encodeURIComponent(ingredientList.concat(amountList))
-  window.history.replaceState(null, "", `?share=${fullList}`)
-  // console.log(decodeURIComponent(fullList))
-  // navigator.clipboard.writeText(window.location.href);
+  console.log(fullList)
 
-  let clipboardURL = window.location.href
-  navigator.clipboard.writeText(clipboardURL)
+  if (fullList != [""]) {
+    window.history.replaceState(null, "", `?share=${fullList}`)
 
-  document.getElementById("success-text").style.visibility = "visible"
+    let clipboardURL = window.location.href
+    navigator.clipboard.writeText(clipboardURL)
+
+    document.getElementById("success-text").style.visibility = "visible"
+  }
 })
 
 clearBtn.addEventListener("click", function () {
