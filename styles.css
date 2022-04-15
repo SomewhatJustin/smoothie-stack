@@ -4,9 +4,11 @@ body {
   width: 100%;
   max-width: 700px;
   display: inline-block;
-  position: absolute;
   background: #8a2be2;
   color: #fafafa;
+  position: relative;
+  min-height: 100vh;
+  margin: 0px;
 }
 
 h2 {
@@ -41,7 +43,8 @@ button {
 }
 
 #page-wrapper {
-  margin: 10px;
+  margin: 15px;
+  padding-bottom: 2.5rem;
 }
 
 .row {
@@ -92,21 +95,29 @@ button {
   visibility: hidden;
 }
 
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  margin-left: 15px;
+}
+
 /* FOOTER */
 #footer ul {
   list-style-type: none;
   display: inline;
-  color: #fafafa;
+  color: #eee;
   padding-left: 0px;
-  position: fixed;
-  bottom: 10px;
+  font-size: .9rem;
+  width: 100%;
 }
 
 #footer ul li {
   display: inline;
-  margin: 0px 10px;
+  margin-right: 25px;
 }
 
 #footer ul li a {
-  color: #fafafa;
+  color: #eee;
 }
