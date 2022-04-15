@@ -13,7 +13,8 @@ h2 {
   font-weight: 300;
 }
 
-#ingredient-items p, #amount-items p {
+#ingredient-items p,
+#amount-items p {
   height: 20px;
   margin-bottom: 35px;
 }
@@ -24,7 +25,8 @@ input {
   padding: 0px 7px;
 }
 
-input, button {
+input,
+button {
   border: black solid 1px;
   border-radius: 5px;
   font-family: 'Rubik', sans-serif;
@@ -67,11 +69,13 @@ button {
   height: 30px;
 }
 
-#share-zone, #clear-zone {
+#share-zone,
+#clear-zone {
   margin-right: 10px;
 }
 
-#share-zone button, #clear-zone button {
+#share-zone button,
+#clear-zone button {
   margin: 5px 0px;
   width: 100%;
   border: none;
@@ -86,4 +90,23 @@ button {
 
 #success-text {
   visibility: hidden;
+}
+
+/* FOOTER */
+#footer ul {
+  list-style-type: none;
+  display: inline;
+  color: #fafafa;
+  padding-left: 0px;
+  position: fixed;
+  bottom: 10px;
+}
+
+#footer ul li {
+  display: inline;
+  margin: 0px 10px;
+}
+
+#footer ul li a {
+  color: #fafafa;
 }
