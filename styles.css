@@ -47,6 +47,7 @@ button {
   padding-bottom: 2.5rem;
 }
 
+
 .row {
   display: flex;
   flex-direction: row;
@@ -59,6 +60,15 @@ button {
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
+}
+
+.row .column:nth-of-type(1),
+.row .column:nth-of-type(2) {
+  min-width: 120px;
+}
+
+.row .column:nth-of-type(3) {
+  max-width: 50px;
 }
 
 #add-btn {
@@ -100,7 +110,7 @@ button {
   bottom: 0;
   width: 100%;
   height: 2.5rem;
-  padding-left: 15px;
+  padding-left: 0px;
 }
 
 /* FOOTER */
@@ -108,7 +118,7 @@ button {
   list-style-type: none;
   display: inline;
   color: #eee;
-  padding-left: 0px;
+  padding-left: 15px;
   font-size: .9rem;
   width: 100%;
 }
@@ -120,4 +130,20 @@ button {
 
 #footer ul li a {
   color: #eee;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 500px) {
+  #page-wrapper {
+    margin: 10px 3px 10px 10px;
+  }
+
+  .row .column:nth-of-type(3) {
+    max-width: 40px;
+  }
+
+  #add-btn {
+    margin-left: 0px;
+  }
 }
