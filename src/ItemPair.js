@@ -18,8 +18,8 @@ export default function ItemPair(props) {
   return (
     <div className="item-holder">
       <div className="item-pair row">
-        <label className="column">
-          Amount, {props.id}
+        <label className={"column"}>
+          {myIndex === 0 ? "Amount" : ""}
           <input
             type="text"
             name="amount"
@@ -28,7 +28,7 @@ export default function ItemPair(props) {
           />
         </label>
         <label className="column">
-          Ingredient
+          {myIndex === 0 ? "Ingredient" : ""}
           <input
             type="text"
             name="ingredient"

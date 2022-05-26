@@ -81,6 +81,8 @@ export default function Form() {
 
     let clipboardURL = window.location.href
     navigator.clipboard.writeText(clipboardURL)
+
+    setIsShared(true)
   }
 
   return (
@@ -96,6 +98,7 @@ export default function Form() {
         onChange={(event) => setNotes(event.target.value)}
       ></textarea>
       <button onClick={(event) => share(event)}>Share</button>
+      {isShared && <p>Copied to clipboard!</p>}
     </form>
   )
 }
