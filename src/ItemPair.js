@@ -15,8 +15,11 @@ export default function ItemPair(props) {
   }
   const myIndex = findMyIndex()
 
-  return (
-    <div className="item-holder">
+  // Render either inputs/labels OR a recipe-style list
+  let itemPair = []
+
+  if (props.inEditMode) {
+    itemPair.push(
       <div className="item-pair row">
         <label className={"column"}>
           {myIndex === 0 ? "Amount" : ""}
@@ -37,6 +40,14 @@ export default function ItemPair(props) {
           />
         </label>
       </div>
-    </div>
-  )
+    )
+  } else {
+    itemPair.push(
+      <p>
+        {props.items[myIndex].amount} of {props.items[myIndex].ingredient}
+      </p>
+    )
+  }
+
+  return <div className="item-holder">{itemPair}</div>
 }

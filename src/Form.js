@@ -8,6 +8,7 @@ export default function Form() {
   const [items, setItems] = React.useState([]) // Items (ingredient + amount) initialized as an array of objects
   const [notes, setNotes] = React.useState("")
   const [isShared, setIsShared] = React.useState(false)
+  const [inEditMode, setInEditMode] = React.useState(true)
 
   // On first load, check URL to see if someone shared this link with me. If so, set the state.
   React.useEffect(() => {
@@ -26,6 +27,7 @@ export default function Form() {
         })
       }
 
+      setInEditMode(false)
       setItems(itemsArray)
       setNotes(sharedObject.notes)
     }
@@ -53,6 +55,8 @@ export default function Form() {
           setItems={setItems}
           key={items[i].id}
           id={items[i].id}
+          inEditMode={inEditMode}
+          setInEditMode={setInEditMode}
         />
       )
       itemPairArr.push(itemPairEl)
@@ -83,20 +87,34 @@ export default function Form() {
     navigator.clipboard.writeText(clipboardURL)
 
     setIsShared(true)
+    setInEditMode(false)
   }
 
-  return (
-    <form className="column">
-      {itemPairElements}
-      <button type="button" id="add-btn" onClick={addItems}>
-        Add
-      </button>
-      <label>Notes</label>
+  // Convert text area if not in edit mode
+  let notesSection
+
+  if (inEditMode) {
+    notesSection = (
       <textarea
         value={notes}
         name="notes"
         onChange={(event) => setNotes(event.target.value)}
       ></textarea>
+    )
+  } else {
+    notesSection = <p>{notes}</p>
+  }
+
+  return (
+    <form className="column">
+      {itemPairElements}
+      {inEditMode && (
+        <button type="button" id="add-btn" onClick={addItems}>
+          Add
+        </button>
+      )}
+      <label>Notes</label>
+      {notesSection}
       <button onClick={(event) => share(event)}>Share</button>
       {isShared && <p>Copied to clipboard!</p>}
     </form>
