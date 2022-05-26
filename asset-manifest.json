@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/smoothie-stack/static/css/main.cae4221b.css",
-    "main.js": "/smoothie-stack/static/js/main.a304f356.js",
-    "static/js/787.beb1ce3a.chunk.js": "/smoothie-stack/static/js/787.beb1ce3a.chunk.js",
-    "index.html": "/smoothie-stack/index.html",
-    "main.cae4221b.css.map": "/smoothie-stack/static/css/main.cae4221b.css.map",
-    "main.a304f356.js.map": "/smoothie-stack/static/js/main.a304f356.js.map",
-    "787.beb1ce3a.chunk.js.map": "/smoothie-stack/static/js/787.beb1ce3a.chunk.js.map"
+    "main.css": "/static/css/main.cae4221b.css",
+    "main.js": "/static/js/main.50187745.js",
+    "static/js/787.beb1ce3a.chunk.js": "/static/js/787.beb1ce3a.chunk.js",
+    "index.html": "/index.html",
+    "main.cae4221b.css.map": "/static/css/main.cae4221b.css.map",
+    "main.50187745.js.map": "/static/js/main.50187745.js.map",
+    "787.beb1ce3a.chunk.js.map": "/static/js/787.beb1ce3a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cae4221b.css",
-    "static/js/main.a304f356.js"
+    "static/js/main.50187745.js"
   ]
 }
