@@ -13,14 +13,13 @@ function checkURL() {
   if (window.location.href.includes("share")) {
     let splitURL = (window.location.href.split('='))
     let urlItems = (decodeURIComponent(splitURL[1]).split(","))
-    console.log(urlItems.length)
 
     for (let i = 0; i < urlItems.length / 2; i++) {
-      ingredientItems.innerHTML += `<p>${urlItems[i]}</p`
+      ingredientItems.innerHTML += `<p>${urlItems[i]}</p>`
     }
 
     for (let j = 0 + urlItems.length / 2; j < urlItems.length; j++) {
-      amountItems.innerHTML += `<p>${urlItems[j]}</p`
+      amountItems.innerHTML += `<p>${urlItems[j]}</p>`
     }
   }
 }
