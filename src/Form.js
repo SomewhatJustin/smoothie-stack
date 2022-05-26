@@ -9,6 +9,28 @@ export default function Form() {
   const [notes, setNotes] = React.useState("")
   const [isShared, setIsShared] = React.useState(false)
 
+  // On first load, check URL to see if someone shared this link with me. If so, set the state.
+  React.useEffect(() => {
+    if (window.location.href.includes("share")) {
+      let url64 = window.location.href.split("=")[1]
+      // console.log(`after part of URL: ${url64}`)
+      const sharedObject = JSON.parse(utf8.decode(atob(url64)))
+      console.log(sharedObject)
+
+      let itemsArray = []
+      for (let i = 0; i < sharedObject.ingredients.length; i++) {
+        itemsArray.push({
+          id: nanoid(),
+          ingredient: sharedObject.ingredients[i],
+          amount: sharedObject.amount[i],
+        })
+      }
+
+      setItems(itemsArray)
+      setNotes(sharedObject.notes)
+    }
+  }, [])
+
   // Event listener for "Add" button
   function addItems() {
     const id = nanoid()
@@ -54,9 +76,13 @@ export default function Form() {
     }
     console.log(sharedObject)
     let base64 = btoa(utf8.encode(JSON.stringify(sharedObject)))
-    console.log(base64)
-    //console.log(JSON.parse(utf8.decode(atob(base64)))
-    console.log(JSON.parse(utf8.decode(atob(base64))))
+
+    window.history.replaceState(null, "", `?share=${base64}`)
+
+    let clipboardURL = window.location.href
+    navigator.clipboard.writeText(clipboardURL)
+
+    setIsShared(true)
   }
 
   return (
@@ -72,6 +98,7 @@ export default function Form() {
         onChange={(event) => setNotes(event.target.value)}
       ></textarea>
       <button onClick={(event) => share(event)}>Share</button>
+      {isShared && <p>Copied to clipboard!</p>}
     </form>
   )
 }
