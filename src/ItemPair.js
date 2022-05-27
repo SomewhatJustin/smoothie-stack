@@ -1,4 +1,5 @@
 import React from "react"
+import { nanoid } from "nanoid"
 
 export default function ItemPair(props) {
   function handleChange(event, myIndex) {
@@ -20,7 +21,7 @@ export default function ItemPair(props) {
 
   if (props.inEditMode) {
     itemPair.push(
-      <div className="item-pair row">
+      <div className="item-pair row" key={props.items[myIndex].id}>
         <label className={"column"}>
           {myIndex === 0 ? "Amount" : ""}
           <input
@@ -39,6 +40,17 @@ export default function ItemPair(props) {
             onChange={(event) => handleChange(event, myIndex)}
           />
         </label>
+        {(props.items[myIndex].ingredient ||
+          props.items[myIndex].amount ||
+          myIndex > 0) && (
+          <button
+            className="delete-btn"
+            type="button"
+            onClick={() => props.deleteItem(myIndex)}
+          >
+            D
+          </button>
+        )}
       </div>
     )
   } else {

@@ -3,13 +3,7 @@ import ItemPair from "./ItemPair"
 import { nanoid } from "nanoid"
 import utf8 from "utf8"
 
-export default function Form() {
-  // STATE
-  const [items, setItems] = React.useState([]) // Items (ingredient + amount) initialized as an array of objects
-  const [notes, setNotes] = React.useState("")
-  const [isShared, setIsShared] = React.useState(false)
-  const [inEditMode, setInEditMode] = React.useState(true)
-
+export default function Form(props) {
   // On first load, check URL to see if someone shared this link with me. If so, set the state.
   React.useEffect(() => {
     if (window.location.href.includes("share")) {
@@ -27,36 +21,34 @@ export default function Form() {
         })
       }
 
-      setInEditMode(false)
-      setItems(itemsArray)
-      setNotes(sharedObject.notes)
+      props.setInEditMode(false)
+      props.setItems(itemsArray)
+      props.setNotes(sharedObject.notes)
     }
   }, [])
 
-  // Event listener for "Add" button
-  function addItems() {
-    const id = nanoid()
-    setItems((old) => [...old, { id: id, amount: "", ingredient: "" }])
-  }
-
-  // set up first blank item
-  if (items.length === 0) {
-    addItems()
+  // Delete functionality
+  function deleteItem(index) {
+    props.setItems((prev) => [
+      ...prev.slice(0, index),
+      ...prev.slice(index + 1),
+    ])
   }
 
   // Create new item inputs when needed
   function generateItemPairs() {
     let itemPairArr = []
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < props.items.length; i++) {
       // const id = nanoid()
       const itemPairEl = (
         <ItemPair
-          items={items}
-          setItems={setItems}
-          key={items[i].id}
-          id={items[i].id}
-          inEditMode={inEditMode}
-          setInEditMode={setInEditMode}
+          items={props.items}
+          setItems={props.setItems}
+          key={props.items[i].id} // id is set with function addItems() in ./App
+          id={props.items[i].id}
+          inEditMode={props.inEditMode}
+          setInEditMode={props.setInEditMode}
+          deleteItem={deleteItem}
         />
       )
       itemPairArr.push(itemPairEl)
@@ -70,13 +62,19 @@ export default function Form() {
   // Event listener for "Share" button
   function share(event) {
     event.preventDefault()
-    // console.log(items, notes)
+
+    // Remove any blanks
+    for (let i = 0; i < props.items.length; i++) {
+      if (!props.items[i].ingredient && !props.items[i].amount) {
+        deleteItem(i)
+      }
+    }
 
     // Combine into one big ol' object
     const sharedObject = {
-      ingredients: [...items.map((item) => item.ingredient)],
-      amount: [...items.map((item) => item.amount)],
-      notes: notes,
+      ingredients: [...props.items.map((item) => item.ingredient)],
+      amount: [...props.items.map((item) => item.amount)],
+      notes: props.notes,
     }
     console.log(sharedObject)
     let base64 = btoa(utf8.encode(JSON.stringify(sharedObject)))
@@ -86,37 +84,44 @@ export default function Form() {
     let clipboardURL = window.location.href
     navigator.clipboard.writeText(clipboardURL)
 
-    setIsShared(true)
-    setInEditMode(false)
+    props.setIsShared(true)
+    props.setInEditMode(false)
   }
 
   // Convert text area if not in edit mode
   let notesSection
 
-  if (inEditMode) {
+  if (props.inEditMode) {
     notesSection = (
       <textarea
-        value={notes}
+        value={props.notes}
         name="notes"
-        onChange={(event) => setNotes(event.target.value)}
+        onChange={(event) => props.setNotes(event.target.value)}
       ></textarea>
     )
   } else {
-    notesSection = <p>{notes}</p>
+    notesSection = <p>{props.notes}</p>
   }
 
   return (
     <form className="column">
       {itemPairElements}
-      {inEditMode && (
-        <button type="button" id="add-btn" onClick={addItems}>
+      {props.inEditMode && (
+        <button type="button" id="add-btn" onClick={props.addItems}>
           Add
         </button>
       )}
-      <label>Notes</label>
+      {props.inEditMode ? (
+        <label>Notes</label>
+      ) : "{props.notes}" === "" ? (
+        ""
+      ) : (
+        <label>Notes</label>
+      )}
       {notesSection}
+
       <button onClick={(event) => share(event)}>Share</button>
-      {isShared && <p>Copied to clipboard!</p>}
+      {props.isShared && <p>Copied to clipboard!</p>}
     </form>
   )
 }
