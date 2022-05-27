@@ -120,7 +120,9 @@ export default function Form(props) {
       )}
       {notesSection}
 
-      <button onClick={(event) => share(event)}>Share</button>
+      <button onClick={(event) => share(event)}>
+        Share <i class="fa-solid fa-share"></i>
+      </button>
       {props.isShared && <p>Copied to clipboard!</p>}
     </form>
   )
