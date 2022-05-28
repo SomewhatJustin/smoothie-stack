@@ -58,7 +58,7 @@ export default function ItemPair(props) {
     )
   } else {
     itemPair.push(
-      <li>
+      <li key={nanoid()}>
         {props.items[myIndex].amount} of {props.items[myIndex].ingredient}
       </li>
     )

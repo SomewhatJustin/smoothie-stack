@@ -67,12 +67,12 @@ function App() {
       <div className="edit-start-zone">
         {!inEditMode && (
           <button onClick={startOver}>
-            <i class="fa-solid fa-rotate"></i> Start new recipe
+            <i className="fa-solid fa-rotate"></i> Start new recipe
           </button>
         )}
         {!inEditMode && (
           <button onClick={editRecipe}>
-            <i class="fa-solid fa-pen-to-square"></i> Edit this recipe
+            <i className="fa-solid fa-pen-to-square"></i> Edit this recipe
           </button>
         )}
       </div>

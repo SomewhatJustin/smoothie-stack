@@ -193,8 +193,11 @@ form .copied {
 }
 
 /* LETS GET RESPONSIVE */
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   form {
     padding: 20px 5px;
+  }
+  form label {
+    margin-right: 0px;
   }
 }
