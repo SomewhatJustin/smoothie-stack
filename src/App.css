@@ -1,8 +1,44 @@
 /* BASE */
+*,
+html {
+  font-family: "Work Sans", sans-serif;
+  box-sizing: border-box;
+  transition: all 0.15s ease-out;
+}
+
+button {
+  cursor: pointer;
+}
+
+body {
+  background: #9b5de5;
+}
 
 .App {
   display: flex;
   align-items: center;
+}
+
+.App h1 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.App h2 {
+  font-weight: 300;
+  font-size: 16px;
+  text-align: center;
+  color: #fafafa;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.App p {
+  font-weight: 400;
 }
 
 .column {
@@ -17,4 +53,148 @@
 
 .hidden {
   display: none;
+}
+
+form {
+  background: #fff;
+  width: 90%;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  align-items: center;
+  max-width: 600px;
+  padding: 40px 20px;
+}
+
+form label {
+  font-family: "Work Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #293264;
+  margin: 3px 10px;
+}
+
+.notes-label {
+  width: 300px;
+  margin-left: 11px;
+  margin-top: 30px;
+}
+
+#item-holder {
+  width: 100%;
+}
+
+form label input,
+form textarea {
+  margin-left: -2px;
+  margin-top: 4px;
+  width: 100%;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid rgba(41, 50, 100, 0.25);
+  border-radius: 7px;
+  font-size: 16px;
+  padding-left: 8px;
+}
+
+form textarea {
+  width: 300px;
+  height: 60px;
+  margin: 5px;
+}
+
+form label input:focus,
+form textarea:focus {
+  outline: none;
+  border: 2px solid #9b5de5;
+}
+
+#share-btn {
+  border: none;
+  width: 186px;
+  height: 40px;
+  background: #3a86ff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+  font-size: 18px;
+  color: white;
+  margin: 30px 5px 10px;
+}
+
+#share-btn:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ff5252;
+  font-size: 22px;
+  margin-top: 25px;
+}
+
+.item-holder:not(:first-of-type) .delete-btn {
+  margin-top: 8px;
+}
+
+.transparent {
+  color: transparent;
+}
+
+/* SHARE MODE */
+
+.share-mode {
+  width: 95%;
+  max-width: 350px;
+}
+
+@keyframes appear {
+  0% {
+    background: transparent;
+    color: transparent;
+  }
+  10% {
+    background: transparent;
+    color: transparent;
+  }
+  100% {
+  }
+}
+
+form .copied {
+  color: #2e7d32;
+  background: #eee;
+  border-radius: 4px;
+  padding: 10px;
+  font-weight: 700;
+  animation-name: appear;
+  animation-duration: 0.8s;
+}
+
+/* START AND EDIT BUTTONS */
+.edit-start-zone {
+  margin: 20px 10px;
+}
+
+.edit-start-zone button {
+  border: none;
+  background: #eee;
+  color: #333;
+  border-radius: 4px;
+  font-size: 14px;
+  margin: 0px 10px;
+  animation-name: appear;
+  animation-duration: 0.8s;
+  padding: 8px 10px;
+}
+
+/* LETS GET RESPONSIVE */
+@media (max-width: 480px) {
+  form {
+    padding: 20px 5px;
+  }
 }

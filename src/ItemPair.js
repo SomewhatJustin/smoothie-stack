@@ -1,4 +1,5 @@
 import React from "react"
+import { nanoid } from "nanoid"
 
 export default function ItemPair(props) {
   function handleChange(event, myIndex) {
@@ -15,14 +16,23 @@ export default function ItemPair(props) {
   }
   const myIndex = findMyIndex()
 
-  return (
-    <div className="item-holder">
-      <div className="item-pair row">
+  // Render either inputs/labels OR a recipe-style list
+  let itemPair = []
+
+  let deleteClass =
+    props.items[myIndex].ingredient || props.items[myIndex].amount
+      ? "delete-btn"
+      : "delete-btn transparent"
+
+  if (props.inEditMode) {
+    itemPair.push(
+      <div className="item-pair row" key={props.items[myIndex].id}>
         <label className={"column"}>
           {myIndex === 0 ? "Amount" : ""}
           <input
             type="text"
             name="amount"
+            placeholder="1/2 cups"
             value={props.items[myIndex].amount}
             onChange={(event) => handleChange(event, myIndex)}
           />
@@ -32,11 +42,27 @@ export default function ItemPair(props) {
           <input
             type="text"
             name="ingredient"
+            placeholder="Frozen bananas"
             value={props.items[myIndex].ingredient}
             onChange={(event) => handleChange(event, myIndex)}
           />
         </label>
+        <button
+          className={deleteClass}
+          type="button"
+          onClick={() => props.deleteItem(myIndex)}
+        >
+          <i className="fa-solid fa-circle-xmark"></i>
+        </button>
       </div>
-    </div>
-  )
+    )
+  } else {
+    itemPair.push(
+      <li>
+        {props.items[myIndex].amount} of {props.items[myIndex].ingredient}
+      </li>
+    )
+  }
+
+  return <div className="item-holder">{itemPair}</div>
 }
