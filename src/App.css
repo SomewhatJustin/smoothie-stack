@@ -172,7 +172,7 @@ form .copied {
   padding: 10px;
   font-weight: 700;
   animation-name: appear;
-  animation-duration: 0.8s;
+  animation-duration: 0.5s;
 }
 
 /* START AND EDIT BUTTONS */
@@ -188,13 +188,16 @@ form .copied {
   font-size: 14px;
   margin: 0px 10px;
   animation-name: appear;
-  animation-duration: 0.8s;
+  animation-duration: 0.5s;
   padding: 8px 10px;
 }
 
 /* LETS GET RESPONSIVE */
-@media (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   form {
     padding: 20px 5px;
+  }
+  form label {
+    margin-right: 0px;
   }
 }
