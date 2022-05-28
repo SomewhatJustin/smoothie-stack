@@ -35,7 +35,11 @@ function App() {
   }
 
   React.useEffect(() => {
-    if (items[items.length - 1].amount && items[items.length - 1].ingredient) {
+    if (
+      items[items.length - 1].amount &&
+      items[items.length - 1].ingredient &&
+      inEditMode
+    ) {
       addItems()
     }
   }, [items])
