@@ -33,6 +33,7 @@ export default function Form(props) {
       ...prev.slice(0, index),
       ...prev.slice(index + 1),
     ])
+    console.log("deleted")
   }
 
   // Create new item inputs when needed
@@ -57,7 +58,6 @@ export default function Form(props) {
   }
 
   const itemPairElements = generateItemPairs()
-  // const itemPairElements = <h2>nothing</h2>
 
   // Event listener for "Share" button
   function share(event) {
@@ -76,7 +76,7 @@ export default function Form(props) {
       amount: [...props.items.map((item) => item.amount)],
       notes: props.notes,
     }
-    console.log(sharedObject)
+
     let base64 = btoa(utf8.encode(JSON.stringify(sharedObject)))
 
     window.history.replaceState(null, "", `?share=${base64}`)
@@ -106,22 +106,17 @@ export default function Form(props) {
   return (
     <form className="column">
       {itemPairElements}
-      {props.inEditMode && (
-        <button type="button" id="add-btn" onClick={props.addItems}>
-          Add
-        </button>
-      )}
       {props.inEditMode ? (
-        <label>Notes</label>
+        <label id="notes-label">Notes</label>
       ) : "{props.notes}" === "" ? (
         ""
       ) : (
-        <label>Notes</label>
+        <label id="notes-label">Notes</label>
       )}
       {notesSection}
 
-      <button onClick={(event) => share(event)}>
-        Share <i class="fa-solid fa-share"></i>
+      <button onClick={(event) => share(event)} id="share-btn">
+        Share <i className="fa-solid fa-share"></i>
       </button>
       {props.isShared && <p>Copied to clipboard!</p>}
     </form>

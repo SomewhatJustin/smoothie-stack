@@ -34,6 +34,12 @@ function App() {
     setItems((old) => [...old, { id: id, amount: "", ingredient: "" }])
   }
 
+  React.useEffect(() => {
+    if (items[items.length - 1].amount && items[items.length - 1].ingredient) {
+      addItems()
+    }
+  }, [items])
+
   return (
     <div className="App column">
       <h1>My Smoothie Stack</h1>

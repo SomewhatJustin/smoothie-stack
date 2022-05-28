@@ -19,6 +19,11 @@ export default function ItemPair(props) {
   // Render either inputs/labels OR a recipe-style list
   let itemPair = []
 
+  let deleteClass =
+    props.items[myIndex].ingredient || props.items[myIndex].amount
+      ? "delete-btn"
+      : "delete-btn transparent"
+
   if (props.inEditMode) {
     itemPair.push(
       <div className="item-pair row" key={props.items[myIndex].id}>
@@ -27,6 +32,7 @@ export default function ItemPair(props) {
           <input
             type="text"
             name="amount"
+            placeholder="1/2 cups"
             value={props.items[myIndex].amount}
             onChange={(event) => handleChange(event, myIndex)}
           />
@@ -36,28 +42,25 @@ export default function ItemPair(props) {
           <input
             type="text"
             name="ingredient"
+            placeholder="Frozen bananas"
             value={props.items[myIndex].ingredient}
             onChange={(event) => handleChange(event, myIndex)}
           />
         </label>
-        {(props.items[myIndex].ingredient ||
-          props.items[myIndex].amount ||
-          myIndex > 0) && (
-          <button
-            className="delete-btn"
-            type="button"
-            onClick={() => props.deleteItem(myIndex)}
-          >
-            D
-          </button>
-        )}
+        <button
+          className={deleteClass}
+          type="button"
+          onClick={() => props.deleteItem(myIndex)}
+        >
+          <i className="fa-solid fa-circle-xmark"></i>
+        </button>
       </div>
     )
   } else {
     itemPair.push(
-      <p>
+      <li>
         {props.items[myIndex].amount} of {props.items[myIndex].ingredient}
-      </p>
+      </li>
     )
   }
 
