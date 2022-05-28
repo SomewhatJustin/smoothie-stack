@@ -200,4 +200,7 @@ form .copied {
   form label {
     margin-right: 0px;
   }
+  .delete-btn {
+    padding: 0px 5px;
+  }
 }
