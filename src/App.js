@@ -9,8 +9,10 @@ function App() {
   const [items, setItems] = React.useState([]) // Items (ingredient + amount) initialized as an array of objects
   const [notes, setNotes] = React.useState("")
   const [isShared, setIsShared] = React.useState(false)
+  const [shareBtnClicked, setShareBtnClicked] = React.useState(false)
 
   function startOver() {
+    setShareBtnClicked(false)
     setInEditMode(true)
     setItems([])
     setNotes("")
@@ -21,6 +23,7 @@ function App() {
   function editRecipe() {
     setIsShared(false)
     setInEditMode(true)
+    setShareBtnClicked(false)
   }
 
   // set up first blank item
@@ -58,9 +61,21 @@ function App() {
         isShared={isShared}
         setIsShared={setIsShared}
         addItems={addItems}
+        shareBtnClicked={shareBtnClicked}
+        setShareBtnClicked={setShareBtnClicked}
       />
-      {!inEditMode && <button onClick={startOver}>Start new recipe</button>}
-      {!inEditMode && <button onClick={editRecipe}>Edit this recipe</button>}
+      <div className="edit-start-zone">
+        {!inEditMode && (
+          <button onClick={startOver}>
+            <i class="fa-solid fa-rotate"></i> Start new recipe
+          </button>
+        )}
+        {!inEditMode && (
+          <button onClick={editRecipe}>
+            <i class="fa-solid fa-pen-to-square"></i> Edit this recipe
+          </button>
+        )}
+      </div>
     </div>
   )
 }

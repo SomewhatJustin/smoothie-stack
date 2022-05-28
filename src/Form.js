@@ -80,6 +80,12 @@ export default function Form(props) {
   // Event listener for "Share" button
   function share(event) {
     event.preventDefault()
+    // Do nothing if no items have been added
+    if (!props.items[0].ingredient && !props.items[0].amount) {
+      return
+    }
+
+    props.setShareBtnClicked(true)
 
     // Remove blanks!
     removeBlanks()
@@ -139,7 +145,11 @@ export default function Form(props) {
       <button onClick={(event) => share(event)} id="share-btn">
         Share <i className="fa-solid fa-share"></i>
       </button>
-      {props.isShared && <p>Copied to clipboard!</p>}
+      {props.shareBtnClicked && (
+        <p className="copied">
+          <i class="fa-solid fa-circle-check"></i> Copied to clipboard!
+        </p>
+      )}
     </form>
   )
 }
