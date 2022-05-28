@@ -8,20 +8,24 @@ export default function Form(props) {
   React.useEffect(() => {
     if (window.location.href.includes("share")) {
       let url64 = window.location.href.split("=")[1]
-      // console.log(`after part of URL: ${url64}`)
+
       const sharedObject = JSON.parse(utf8.decode(atob(url64)))
       console.log(sharedObject)
 
       let itemsArray = []
       for (let i = 0; i < sharedObject.ingredients.length; i++) {
-        itemsArray.push({
-          id: nanoid(),
-          ingredient: sharedObject.ingredients[i],
-          amount: sharedObject.amount[i],
-        })
+        // Don't add blanks!
+        if (sharedObject.ingredients[i] || sharedObject.amount[i]) {
+          itemsArray.push({
+            id: nanoid(),
+            ingredient: sharedObject.ingredients[i],
+            amount: sharedObject.amount[i],
+          })
+        }
       }
 
       props.setInEditMode(false)
+      props.setIsShared(true)
       props.setItems(itemsArray)
       props.setNotes(sharedObject.notes)
     }
@@ -34,6 +38,15 @@ export default function Form(props) {
       ...prev.slice(index + 1),
     ])
     console.log("deleted")
+  }
+
+  // Remove any blanks
+  function removeBlanks() {
+    for (let i = 0; i < props.items.length; i++) {
+      if (!props.items[i].ingredient && !props.items[i].amount) {
+        deleteItem(i)
+      }
+    }
   }
 
   // Create new item inputs when needed
@@ -57,18 +70,19 @@ export default function Form(props) {
     return itemPairArr
   }
 
-  const itemPairElements = generateItemPairs()
+  let itemPairElements = generateItemPairs()
+
+  if (props.isShared) {
+    console.log("is shared")
+    itemPairElements = <ul className="share-mode">{itemPairElements}</ul>
+  }
 
   // Event listener for "Share" button
   function share(event) {
     event.preventDefault()
 
-    // Remove any blanks
-    for (let i = 0; i < props.items.length; i++) {
-      if (!props.items[i].ingredient && !props.items[i].amount) {
-        deleteItem(i)
-      }
-    }
+    // Remove blanks!
+    removeBlanks()
 
     // Combine into one big ol' object
     const sharedObject = {
@@ -100,18 +114,25 @@ export default function Form(props) {
       ></textarea>
     )
   } else {
-    notesSection = <p>{props.notes}</p>
+    notesSection = (
+      <p className={props.isShared && "share-mode"}>{props.notes}</p>
+    )
   }
 
   return (
     <form className="column">
+      {props.isShared && <label className="share-mode">Ingredients</label>}
       {itemPairElements}
       {props.inEditMode ? (
         <label id="notes-label">Notes</label>
       ) : "{props.notes}" === "" ? (
         ""
       ) : (
-        <label id="notes-label">Notes</label>
+        <label
+          className={props.isShared ? "share-mode notes-label" : "notes-label"}
+        >
+          Notes
+        </label>
       )}
       {notesSection}
 

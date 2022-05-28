@@ -78,7 +78,7 @@ form label {
   margin: 3px 10px;
 }
 
-#notes-label {
+.notes-label {
   width: 300px;
   margin-left: 11px;
   margin-top: 30px;
@@ -162,4 +162,10 @@ form textarea:focus {
 
 .transparent {
   color: transparent;
+}
+
+/* SHARE MODE */
+.share-mode {
+  width: 95%;
+  max-width: 350px;
 }
