@@ -1,5 +1,6 @@
 import "./App.css"
 import Form from "./Form"
+import Footer from "./Footer"
 import { nanoid } from "nanoid"
 import React from "react"
 
@@ -45,7 +46,7 @@ function App() {
     ) {
       addItems()
     }
-  }, [items])
+  }, [items, inEditMode])
 
   return (
     <div className="App column">
@@ -76,6 +77,7 @@ function App() {
           </button>
         )}
       </div>
+      <Footer />
     </div>
   )
 }
