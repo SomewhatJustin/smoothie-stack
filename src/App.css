@@ -203,4 +203,34 @@ form .copied {
   .delete-btn {
     padding: 0px 5px;
   }
+
+  footer {
+    font-size: 12px;
+  }
+}
+
+/* FOOTER */
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3rem;
+  background: #e75f7a88;
+  color: white;
+}
+
+footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10px;
+}
+
+footer ul li {
+  margin: 0px 10px;
+}
+
+footer ul li a {
+  text-decoration: none;
 }
