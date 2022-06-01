@@ -31,7 +31,7 @@ export default function ItemPair(props) {
     itemPair.push(
       <div className="item-pair row" key={props.items[myIndex].id}>
         <label className={"column"}>
-          {myIndex === 0 ? "Amount" : ""} // label only first instance
+          {myIndex === 0 ? "Amount" : ""}
           <input
             type="text"
             name="amount"
@@ -41,7 +41,7 @@ export default function ItemPair(props) {
           />
         </label>
         <label className="column">
-          {myIndex === 0 ? "Ingredient" : ""} // label only first instance
+          {myIndex === 0 ? "Ingredient" : ""}
           <input
             type="text"
             name="ingredient"
