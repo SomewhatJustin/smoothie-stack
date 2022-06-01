@@ -4,7 +4,7 @@ import { nanoid } from "nanoid"
 import utf8 from "utf8"
 
 export default function Form(props) {
-  // On first load, check URL to see if someone shared this link with me. If so, set the state.
+  // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
     if (window.location.href.includes("share")) {
       let url64 = window.location.href.split("=")[1]
@@ -50,10 +50,11 @@ export default function Form(props) {
   }
 
   // Create new item inputs when needed
+  let itemPairElements = generateItemPairs()
+
   function generateItemPairs() {
     let itemPairArr = []
     for (let i = 0; i < props.items.length; i++) {
-      // const id = nanoid()
       const itemPairEl = (
         <ItemPair
           items={props.items}
@@ -70,10 +71,8 @@ export default function Form(props) {
     return itemPairArr
   }
 
-  let itemPairElements = generateItemPairs()
-
+  // In share mode, display an unordered list
   if (props.isShared) {
-    console.log("is shared")
     itemPairElements = <ul className="share-mode">{itemPairElements}</ul>
   }
 
@@ -97,18 +96,19 @@ export default function Form(props) {
       notes: props.notes,
     }
 
+    // Convert to base64. Take care of character escaping.
     let base64 = btoa(utf8.encode(JSON.stringify(sharedObject)))
 
+    // Write to URL
     window.history.replaceState(null, "", `?share=${base64}`)
 
-    let clipboardURL = window.location.href
-    navigator.clipboard.writeText(clipboardURL)
+    navigator.clipboard.writeText(window.location.href)
 
     props.setIsShared(true)
     props.setInEditMode(false)
   }
 
-  // Convert text area if not in edit mode
+  // Convert notes if not in edit mode
   let notesSection
 
   if (props.inEditMode) {
@@ -131,7 +131,7 @@ export default function Form(props) {
       {itemPairElements}
       {props.inEditMode ? (
         <label id="notes-label">Notes</label>
-      ) : "{props.notes}" === "" ? (
+      ) : props.notes === "" ? (
         ""
       ) : (
         <label
@@ -147,7 +147,7 @@ export default function Form(props) {
       </button>
       {props.shareBtnClicked && (
         <p className="copied">
-          <i class="fa-solid fa-circle-check"></i> Copied to clipboard!
+          <i className="fa-solid fa-circle-check"></i> Copied to clipboard!
         </p>
       )}
     </form>

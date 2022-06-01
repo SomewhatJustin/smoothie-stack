@@ -32,12 +32,12 @@ function App() {
     addItems()
   }
 
-  // Event listener for "Add" button
   function addItems() {
     let id = nanoid()
     setItems((old) => [...old, { id: id, amount: "", ingredient: "" }])
   }
 
+  // Add new items as I input new data
   React.useEffect(() => {
     if (
       items[items.length - 1].amount &&
