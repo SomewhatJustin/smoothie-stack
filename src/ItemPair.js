@@ -2,6 +2,7 @@ import React from "react"
 import { nanoid } from "nanoid"
 
 export default function ItemPair(props) {
+  // On form change, edit the right item in the array of objects
   function handleChange(event, myIndex) {
     props.setItems((prev) => [
       ...prev.slice(0, myIndex),
@@ -14,11 +15,13 @@ export default function ItemPair(props) {
   function findMyIndex() {
     return props.items.findIndex((item) => item.id === props.id)
   }
+
   const myIndex = findMyIndex()
 
   // Render either inputs/labels OR a recipe-style list
   let itemPair = []
 
+  // Make the delete btn transparent if there isn't data on that line
   let deleteClass =
     props.items[myIndex].ingredient || props.items[myIndex].amount
       ? "delete-btn"
@@ -28,7 +31,7 @@ export default function ItemPair(props) {
     itemPair.push(
       <div className="item-pair row" key={props.items[myIndex].id}>
         <label className={"column"}>
-          {myIndex === 0 ? "Amount" : ""}
+          {myIndex === 0 ? "Amount" : ""} // label only first instance
           <input
             type="text"
             name="amount"
@@ -38,7 +41,7 @@ export default function ItemPair(props) {
           />
         </label>
         <label className="column">
-          {myIndex === 0 ? "Ingredient" : ""}
+          {myIndex === 0 ? "Ingredient" : ""} // label only first instance
           <input
             type="text"
             name="ingredient"
