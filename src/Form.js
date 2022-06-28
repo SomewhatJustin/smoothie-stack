@@ -3,7 +3,13 @@ import ItemPair from "./ItemPair"
 import { nanoid } from "nanoid"
 import utf8 from "utf8"
 
+import { createClient } from '@supabase/supabase-js'
+
+
 export default function Form(props) {
+  const supabaseUrl = 'https://elwrnresrviksptoeoes.supabase.co'
+  const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY
+  const supabase = createClient(supabaseUrl, supabaseKey)
   // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
     if (window.location.href.includes("share")) {
@@ -30,6 +36,20 @@ export default function Form(props) {
       props.setNotes(sharedObject.notes)
     }
   }, [])
+
+  React.useEffect(() => {
+    async function testingThisOut() {
+      const { data, error } = await supabase
+        .from('Recipes')
+        .insert([
+          { recipe: 'someValue', path: 'otherValue' },
+        ])
+    }
+    testingThisOut()
+
+  }, [props.isShared])
+
+
 
   // Delete functionality
   function deleteItem(index) {
@@ -93,7 +113,7 @@ export default function Form(props) {
     const sharedObject = {
       ingredients: [...props.items.map((item) => item.ingredient)],
       amount: [...props.items.map((item) => item.amount)],
-      notes: props.notes,
+      notes: props.notes
     }
 
     // Convert to base64. Take care of character escaping.
@@ -103,6 +123,7 @@ export default function Form(props) {
     window.history.replaceState(null, "", `?share=${base64}`)
 
     navigator.clipboard.writeText(window.location.href)
+
 
     props.setIsShared(true)
     props.setInEditMode(false)
@@ -124,6 +145,7 @@ export default function Form(props) {
       <p className={props.isShared && "share-mode"}>{props.notes}</p>
     )
   }
+
 
   return (
     <form className="column">
