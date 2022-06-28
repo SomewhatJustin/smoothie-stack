@@ -46,26 +46,6 @@ export default function Form(props) {
     }
   }, [])
 
-  React.useEffect(() => {
-    // Combine into one big ol' object
-    const sharedObject = {
-      ingredients: [...props.items.map((item) => item.ingredient).filter(item => item !== "")],
-      amount: [...props.items.map((item) => item.amount).filter(item => item !== "")],
-      notes: props.notes
-    }
-
-    async function sendToDB() {
-      console.log("Sending... one sec")
-      const { data, error } = await supabase
-        .from('Recipes')
-        .insert([
-          { recipe: JSON.stringify(sharedObject), path: recipeID },
-        ])
-    }
-    sendToDB()
-
-  }, [recipeID])
-
   // Delete functionality
   function deleteItem(index) {
     props.setItems((prev) => [
@@ -130,6 +110,22 @@ export default function Form(props) {
     // Write to URL
     window.history.replaceState(null, "", `/s/${shortPath}`)
     navigator.clipboard.writeText(window.location.href)
+
+    // Combine into one big ol' object
+    const sharedObject = {
+      ingredients: [...props.items.map((item) => item.ingredient).filter(item => item !== "")],
+      amount: [...props.items.map((item) => item.amount).filter(item => item !== "")],
+      notes: props.notes
+    }
+
+    async function sendToDB() {
+      const { data, error } = await supabase
+        .from('Recipes')
+        .insert([
+          { recipe: JSON.stringify(sharedObject), path: shortPath },
+        ])
+    }
+    sendToDB()
 
     props.setIsShared(true)
     props.setInEditMode(false)
