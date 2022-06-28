@@ -10,13 +10,15 @@ export default function Form(props) {
   const supabaseUrl = 'https://elwrnresrviksptoeoes.supabase.co'
   const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY
   const supabase = createClient(supabaseUrl, supabaseKey)
+
+  const [recipeID, setRecipeID] = React.useState("")
+
   // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
     if (window.location.href.includes("share")) {
       let url64 = window.location.href.split("=")[1]
 
       const sharedObject = JSON.parse(utf8.decode(atob(url64)))
-      console.log(sharedObject)
 
       let itemsArray = []
       for (let i = 0; i < sharedObject.ingredients.length; i++) {
@@ -37,27 +39,12 @@ export default function Form(props) {
     }
   }, [])
 
-  React.useEffect(() => {
-    async function testingThisOut() {
-      const { data, error } = await supabase
-        .from('Recipes')
-        .insert([
-          { recipe: 'someValue', path: 'otherValue' },
-        ])
-    }
-    testingThisOut()
-
-  }, [props.isShared])
-
-
-
   // Delete functionality
   function deleteItem(index) {
     props.setItems((prev) => [
       ...prev.slice(0, index),
       ...prev.slice(index + 1),
     ])
-    console.log("deleted")
   }
 
   // Remove any blanks
@@ -109,12 +96,26 @@ export default function Form(props) {
     // Remove blanks!
     removeBlanks()
 
+    // Set an ID, which we'll use as the short URL
+    setRecipeID(nanoid(6))
+
     // Combine into one big ol' object
     const sharedObject = {
-      ingredients: [...props.items.map((item) => item.ingredient)],
-      amount: [...props.items.map((item) => item.amount)],
+      ingredients: [...props.items.map((item) => item.ingredient).filter(item => item !== "")],
+      amount: [...props.items.map((item) => item.amount).filter(item => item !== "")],
       notes: props.notes
     }
+
+    async function sendToDB() {
+      console.log("Sending... one sec")
+      const { data, error } = await supabase
+        .from('Recipes')
+        .insert([
+          { recipe: JSON.stringify(sharedObject), path: recipeID },
+        ])
+    }
+
+    sendToDB()
 
     // Convert to base64. Take care of character escaping.
     let base64 = btoa(utf8.encode(JSON.stringify(sharedObject)))
