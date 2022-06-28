@@ -13,30 +13,37 @@ export default function Form(props) {
 
   const [recipeID, setRecipeID] = React.useState("")
 
+  async function getRecipe(id) {
+    let { data: Recipes, error } = await supabase
+      .from('Recipes')
+      .select('recipe', 'path')
+      .eq('path', id)
+
+    return JSON.parse(Recipes[0].recipe)
+  }
+
   // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
-    /*     if (window.location.href.includes("share")) {
-          let url64 = window.location.href.split("=")[1]
-    
-          const sharedObject = JSON.parse(utf8.decode(atob(url64)))
-    
-          let itemsArray = []
-          for (let i = 0; i < sharedObject.ingredients.length; i++) {
-            // Don't add blanks!
-            if (sharedObject.ingredients[i] || sharedObject.amount[i]) {
-              itemsArray.push({
-                id: nanoid(),
-                ingredient: sharedObject.ingredients[i],
-                amount: sharedObject.amount[i],
-              })
-            }
-          }
-    
-          props.setInEditMode(false)
-          props.setIsShared(true)
-          props.setItems(itemsArray)
-          props.setNotes(sharedObject.notes)
-        } */
+    if (window.location.href.includes("/s/")) {
+      const urlID = window.location.href.split("/s/")[1]
+
+      setRecipeID(urlID)
+
+      getRecipe(urlID).then(result => {
+        let itemsArray = []
+
+        for (let i = 0; i < result.ingredients.length; i++) {
+          itemsArray.push({ id: nanoid(), ingredient: result.ingredients[i], amount: result.amount[i] })
+        }
+        props.setItems(itemsArray)
+
+        props.setNotes(result.notes)
+      })
+
+
+      props.setInEditMode(false)
+      props.setIsShared(true)
+    }
   }, [])
 
   React.useEffect(() => {
@@ -56,10 +63,6 @@ export default function Form(props) {
         ])
     }
     sendToDB()
-
-    // Write to URL
-    window.history.replaceState(null, "", `/s/${recipeID}`)
-    navigator.clipboard.writeText(window.location.href)
 
   }, [recipeID])
 
@@ -121,7 +124,12 @@ export default function Form(props) {
     removeBlanks() // TODO: This may be removed??
 
     // Set an ID, which we'll use as the short URL
-    setRecipeID(nanoid(6))
+    const shortPath = nanoid(6)
+    setRecipeID(shortPath)
+
+    // Write to URL
+    window.history.replaceState(null, "", `/s/${shortPath}`)
+    navigator.clipboard.writeText(window.location.href)
 
     props.setIsShared(true)
     props.setInEditMode(false)
