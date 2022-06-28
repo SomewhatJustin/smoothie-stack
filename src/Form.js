@@ -15,29 +15,53 @@ export default function Form(props) {
 
   // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
-    if (window.location.href.includes("share")) {
-      let url64 = window.location.href.split("=")[1]
-
-      const sharedObject = JSON.parse(utf8.decode(atob(url64)))
-
-      let itemsArray = []
-      for (let i = 0; i < sharedObject.ingredients.length; i++) {
-        // Don't add blanks!
-        if (sharedObject.ingredients[i] || sharedObject.amount[i]) {
-          itemsArray.push({
-            id: nanoid(),
-            ingredient: sharedObject.ingredients[i],
-            amount: sharedObject.amount[i],
-          })
-        }
-      }
-
-      props.setInEditMode(false)
-      props.setIsShared(true)
-      props.setItems(itemsArray)
-      props.setNotes(sharedObject.notes)
-    }
+    /*     if (window.location.href.includes("share")) {
+          let url64 = window.location.href.split("=")[1]
+    
+          const sharedObject = JSON.parse(utf8.decode(atob(url64)))
+    
+          let itemsArray = []
+          for (let i = 0; i < sharedObject.ingredients.length; i++) {
+            // Don't add blanks!
+            if (sharedObject.ingredients[i] || sharedObject.amount[i]) {
+              itemsArray.push({
+                id: nanoid(),
+                ingredient: sharedObject.ingredients[i],
+                amount: sharedObject.amount[i],
+              })
+            }
+          }
+    
+          props.setInEditMode(false)
+          props.setIsShared(true)
+          props.setItems(itemsArray)
+          props.setNotes(sharedObject.notes)
+        } */
   }, [])
+
+  React.useEffect(() => {
+    // Combine into one big ol' object
+    const sharedObject = {
+      ingredients: [...props.items.map((item) => item.ingredient).filter(item => item !== "")],
+      amount: [...props.items.map((item) => item.amount).filter(item => item !== "")],
+      notes: props.notes
+    }
+
+    async function sendToDB() {
+      console.log("Sending... one sec")
+      const { data, error } = await supabase
+        .from('Recipes')
+        .insert([
+          { recipe: JSON.stringify(sharedObject), path: recipeID },
+        ])
+    }
+    sendToDB()
+
+    // Write to URL
+    window.history.replaceState(null, "", `/s/${recipeID}`)
+    navigator.clipboard.writeText(window.location.href)
+
+  }, [recipeID])
 
   // Delete functionality
   function deleteItem(index) {
@@ -94,37 +118,10 @@ export default function Form(props) {
     props.setShareBtnClicked(true)
 
     // Remove blanks!
-    removeBlanks()
+    removeBlanks() // TODO: This may be removed??
 
     // Set an ID, which we'll use as the short URL
     setRecipeID(nanoid(6))
-
-    // Combine into one big ol' object
-    const sharedObject = {
-      ingredients: [...props.items.map((item) => item.ingredient).filter(item => item !== "")],
-      amount: [...props.items.map((item) => item.amount).filter(item => item !== "")],
-      notes: props.notes
-    }
-
-    async function sendToDB() {
-      console.log("Sending... one sec")
-      const { data, error } = await supabase
-        .from('Recipes')
-        .insert([
-          { recipe: JSON.stringify(sharedObject), path: recipeID },
-        ])
-    }
-
-    sendToDB()
-
-    // Convert to base64. Take care of character escaping.
-    let base64 = btoa(utf8.encode(JSON.stringify(sharedObject)))
-
-    // Write to URL
-    window.history.replaceState(null, "", `?share=${base64}`)
-
-    navigator.clipboard.writeText(window.location.href)
-
 
     props.setIsShared(true)
     props.setInEditMode(false)
