@@ -5,13 +5,13 @@ import utf8 from "utf8"
 
 import { createClient } from '@supabase/supabase-js'
 
-
 export default function Form(props) {
   const supabaseUrl = 'https://elwrnresrviksptoeoes.supabase.co'
   const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY
   const supabase = createClient(supabaseUrl, supabaseKey)
 
   const [recipeID, setRecipeID] = React.useState("")
+  const [isVisiting, setIsVisiting] = React.useState(false)
 
   async function getRecipe(id) {
     let { data: Recipes, error } = await supabase
@@ -25,6 +25,7 @@ export default function Form(props) {
   // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
     if (window.location.href.includes("/s/")) {
+      setIsVisiting(true)
       const urlID = window.location.href.split("/s/")[1]
 
       setRecipeID(urlID)
@@ -33,15 +34,17 @@ export default function Form(props) {
         let itemsArray = []
 
         for (let i = 0; i < result.ingredients.length; i++) {
-          itemsArray.push({ id: nanoid(), ingredient: result.ingredients[i], amount: result.amount[i] })
+          itemsArray.push(
+            {
+              id: nanoid(),
+              ingredient: result.ingredients[i],
+              amount: result.amount[i]
+            }
+          )
         }
         props.setItems(itemsArray)
-
         props.setNotes(result.notes)
       })
-
-
-      props.setInEditMode(false)
       props.setIsShared(true)
     }
   }, [])
@@ -75,9 +78,8 @@ export default function Form(props) {
           setItems={props.setItems}
           key={props.items[i].id} // id is set with function addItems() in ./App
           id={props.items[i].id}
-          inEditMode={props.inEditMode}
-          setInEditMode={props.setInEditMode}
           deleteItem={deleteItem}
+          isShared={props.isShared}
         />
       )
       itemPairArr.push(itemPairEl)
@@ -97,8 +99,6 @@ export default function Form(props) {
     if (!props.items[0].ingredient && !props.items[0].amount) {
       return
     }
-
-    props.setShareBtnClicked(true)
 
     // Remove blanks!
     removeBlanks() // TODO: This may be removed??
@@ -128,13 +128,12 @@ export default function Form(props) {
     sendToDB()
 
     props.setIsShared(true)
-    props.setInEditMode(false)
   }
 
   // Convert notes if not in edit mode
   let notesSection
 
-  if (props.inEditMode) {
+  if (!props.isShared) {
     notesSection = (
       <textarea
         value={props.notes}
@@ -148,12 +147,17 @@ export default function Form(props) {
     )
   }
 
+  const copiedBanner = (
+    <p className="copied">
+      <i className="fa-solid fa-circle-check"></i> Copied to clipboard!
+    </p>)
+
 
   return (
     <form className="column">
       {props.isShared && <label className="share-mode">Ingredients</label>}
       {itemPairElements}
-      {props.inEditMode ? (
+      {!props.isShared ? (
         <label id="notes-label">Notes</label>
       ) : props.notes === "" ? (
         ""
@@ -169,11 +173,7 @@ export default function Form(props) {
       <button onClick={(event) => share(event)} id="share-btn">
         Share <i className="fa-solid fa-share"></i>
       </button>
-      {props.shareBtnClicked && (
-        <p className="copied">
-          <i className="fa-solid fa-circle-check"></i> Copied to clipboard!
-        </p>
-      )}
+      {(props.isShared && !isVisiting) && copiedBanner}
     </form>
   )
 }

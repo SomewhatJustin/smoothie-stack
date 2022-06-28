@@ -27,7 +27,7 @@ export default function ItemPair(props) {
       ? "delete-btn"
       : "delete-btn transparent"
 
-  if (props.inEditMode) {
+  if (!props.isShared) {
     itemPair.push(
       <div className="item-pair row" key={props.items[myIndex].id}>
         <label className={"column"}>

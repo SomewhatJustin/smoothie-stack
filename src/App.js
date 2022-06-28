@@ -6,15 +6,11 @@ import React from "react"
 
 function App() {
   // STATE
-  const [inEditMode, setInEditMode] = React.useState(true)
   const [items, setItems] = React.useState([]) // Items (ingredient + amount) initialized as an array of objects
   const [notes, setNotes] = React.useState("")
   const [isShared, setIsShared] = React.useState(false)
-  const [shareBtnClicked, setShareBtnClicked] = React.useState(false)
 
   function startOver() {
-    setShareBtnClicked(false)
-    setInEditMode(true)
     setItems([])
     setNotes("")
     setIsShared(false)
@@ -23,8 +19,6 @@ function App() {
 
   function editRecipe() {
     setIsShared(false)
-    setInEditMode(true)
-    setShareBtnClicked(false)
   }
 
   // set up first blank item
@@ -42,19 +36,17 @@ function App() {
     if (
       items[items.length - 1].amount &&
       items[items.length - 1].ingredient &&
-      inEditMode
+      !isShared
     ) {
       addItems()
     }
-  }, [items, inEditMode])
+  }, [items, isShared])
 
   return (
     <div className="App column">
       <h1>My Smoothie Stack</h1>
       <h2>Build your recipe and share it with a link.</h2>
       <Form
-        inEditMode={inEditMode}
-        setInEditMode={setInEditMode}
         items={items}
         setItems={setItems}
         notes={notes}
@@ -62,16 +54,14 @@ function App() {
         isShared={isShared}
         setIsShared={setIsShared}
         addItems={addItems}
-        shareBtnClicked={shareBtnClicked}
-        setShareBtnClicked={setShareBtnClicked}
       />
       <div className="edit-start-zone">
-        {!inEditMode && (
+        {isShared && (
           <button onClick={startOver}>
             <i className="fa-solid fa-rotate"></i> Start new recipe
           </button>
         )}
-        {!inEditMode && (
+        {isShared && (
           <button onClick={editRecipe}>
             <i className="fa-solid fa-pen-to-square"></i> Edit this recipe
           </button>
