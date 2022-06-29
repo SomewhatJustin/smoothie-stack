@@ -5,7 +5,6 @@ const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 async function getRecipe(id) {
-
   let { data: Recipes, error } = await supabase
     .from('Recipes')
     .select('recipe', 'path')
