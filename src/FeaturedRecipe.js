@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getRecipe } from "./utils";
 
 export default function FeaturedRecipe(props) {
-  const [recipeObj, setRecipeObj] = useState({})
+  const [recipeObj, setRecipeObj] = useState({ ingredients: "" })
 
   const path = props.path
   let thisRecipe = {}
@@ -28,7 +28,7 @@ export default function FeaturedRecipe(props) {
 
   return (
     <div className="featuredRecipe">
-      <h3>{title()}</h3>
+      <a href={`/s/${path}`}><h3>{title()}</h3></a>
     </div>
   )
 }
