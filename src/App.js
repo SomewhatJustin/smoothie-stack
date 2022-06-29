@@ -1,6 +1,7 @@
 import "./App.css"
 import Form from "./Form"
 import Footer from "./Footer"
+import Navbar from "./Navbar"
 import { nanoid } from "nanoid"
 import React from "react"
 
@@ -44,6 +45,7 @@ function App() {
 
   return (
     <div className="App column">
+      <Navbar />
       <h1>My Smoothie Stack</h1>
       <h2>Build your recipe and share it with a link.</h2>
       <Form
