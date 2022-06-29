@@ -132,7 +132,7 @@ export default function Form(props) {
 
 
   return (
-    <form className="column">
+    <form className="column card">
       {props.isShared && <label className="share-mode">Ingredients</label>}
       {itemPairElements}
       {!props.isShared ? (

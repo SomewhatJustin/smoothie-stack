@@ -31,7 +31,9 @@ export default function Discover(props) {
     <div className="App column">
       <Navbar />
       <h1>Imagine a planet with smoothies.</h1>
-      {createFeaturedRecipes()}
+      <div className="recipes-container">
+        {createFeaturedRecipes()}
+      </div>
     </div>
   )
 }
