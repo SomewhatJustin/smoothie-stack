@@ -1,26 +1,11 @@
 import React from "react"
 import ItemPair from "./ItemPair"
 import { nanoid } from "nanoid"
-import utf8 from "utf8"
-
-import { createClient } from '@supabase/supabase-js'
+import { getRecipe, sendToDB } from './utils'
 
 export default function Form(props) {
-  const supabaseUrl = 'https://elwrnresrviksptoeoes.supabase.co'
-  const supabaseKey = process.env.REACT_APP_SUPABASE_ANON_KEY
-  const supabase = createClient(supabaseUrl, supabaseKey)
-
   const [recipeID, setRecipeID] = React.useState("")
   const [isVisiting, setIsVisiting] = React.useState(false)
-
-  async function getRecipe(id) {
-    let { data: Recipes, error } = await supabase
-      .from('Recipes')
-      .select('recipe', 'path')
-      .eq('path', id)
-
-    return JSON.parse(Recipes[0].recipe)
-  }
 
   // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
@@ -118,14 +103,7 @@ export default function Form(props) {
       notes: props.notes
     }
 
-    async function sendToDB() {
-      const { data, error } = await supabase
-        .from('Recipes')
-        .insert([
-          { recipe: JSON.stringify(sharedObject), path: shortPath },
-        ])
-    }
-    sendToDB()
+    sendToDB(sharedObject, shortPath)
 
     props.setIsShared(true)
   }
