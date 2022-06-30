@@ -9,7 +9,7 @@ import useItems from './hooks/useItems'
 function App() {
   // STATE
 
-  const { items, setItems } = useItems()
+  const { items, setItems, addItems, deleteItem } = useItems()
   const [notes, setNotes] = React.useState("")
   const [isShared, setIsShared] = React.useState(false)
 
@@ -29,10 +29,7 @@ function App() {
     addItems()
   }
 
-  function addItems() {
-    let id = nanoid()
-    setItems((old) => [...old, { id: id, amount: "", ingredient: "" }])
-  }
+
 
   // Add new items as I input new data
   React.useEffect(() => {
@@ -58,6 +55,7 @@ function App() {
         isShared={isShared}
         setIsShared={setIsShared}
         addItems={addItems}
+        deleteItem={deleteItem}
       />
       <div className="edit-start-zone">
         {isShared && (

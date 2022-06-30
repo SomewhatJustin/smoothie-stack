@@ -2,6 +2,7 @@ import React from "react"
 import ItemPair from "./ItemPair"
 import { nanoid } from "nanoid"
 import { getRecipe, sendToDB } from './utils'
+import useItems from "./hooks/useItems"
 
 export default function Form(props) {
   const [recipeID, setRecipeID] = React.useState("")
@@ -34,19 +35,12 @@ export default function Form(props) {
     }
   }, [])
 
-  // Delete functionality
-  function deleteItem(index) {
-    props.setItems((prev) => [
-      ...prev.slice(0, index),
-      ...prev.slice(index + 1),
-    ])
-  }
 
   // Remove any blanks
   function removeBlanks() {
     for (let i = 0; i < props.items.length; i++) {
       if (!props.items[i].ingredient && !props.items[i].amount) {
-        deleteItem(i)
+        props.deleteItem(i)
       }
     }
   }
@@ -63,7 +57,7 @@ export default function Form(props) {
           setItems={props.setItems}
           key={props.items[i].id} // id is set with function addItems() in ./App
           id={props.items[i].id}
-          deleteItem={deleteItem}
+          deleteItem={props.deleteItem}
           isShared={props.isShared}
         />
       )
