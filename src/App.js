@@ -4,10 +4,12 @@ import Footer from "./Footer"
 import Navbar from "./Navbar"
 import { nanoid } from "nanoid"
 import React from "react"
+import useItems from './hooks/useItems'
 
 function App() {
   // STATE
-  const [items, setItems] = React.useState([]) // Items (ingredient + amount) initialized as an array of objects
+
+  const { items, setItems } = useItems()
   const [notes, setNotes] = React.useState("")
   const [isShared, setIsShared] = React.useState(false)
 

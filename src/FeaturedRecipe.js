@@ -9,7 +9,6 @@ export default function FeaturedRecipe(props) {
   const path = props.path
   let thisRecipe = {}
 
-  // testing
   useEffect(() => {
     getRecipe(path)
       .then(result => {
