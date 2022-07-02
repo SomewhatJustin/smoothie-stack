@@ -18,14 +18,15 @@ export default function ItemPair(props) {
 
   const myIndex = findMyIndex()
 
-  // Render either inputs/labels OR a recipe-style list
-  let itemPair = []
 
   // Make the delete btn transparent if there isn't data on that line
   let deleteClass =
     props.items[myIndex].ingredient || props.items[myIndex].amount
       ? "delete-btn"
       : "delete-btn transparent"
+
+  // Render either inputs/labels OR a recipe-style list
+  let itemPair = []
 
   if (!props.isShared) {
     itemPair.push(

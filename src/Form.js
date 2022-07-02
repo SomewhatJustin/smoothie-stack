@@ -2,19 +2,18 @@ import React from "react"
 import ItemPair from "./ItemPair"
 import { nanoid } from "nanoid"
 import { getRecipe, sendToDB } from './utils'
-import useItems from "./hooks/useItems"
 
 export default function Form(props) {
-  const [recipeID, setRecipeID] = React.useState("")
+
   const [isVisiting, setIsVisiting] = React.useState(false)
+
+
 
   // On first load, check URL to see if someone shared this link with me. If so, set the state equal to that recipe.
   React.useEffect(() => {
     if (window.location.href.includes("/s/")) {
       setIsVisiting(true)
       const urlID = window.location.href.split("/s/")[1]
-
-      setRecipeID(urlID)
 
       getRecipe(urlID).then(result => {
         let itemsArray = []
@@ -84,7 +83,6 @@ export default function Form(props) {
 
     // Set an ID, which we'll use as the short URL
     const shortPath = nanoid(6)
-    setRecipeID(shortPath)
 
     // Write to URL
     window.history.replaceState(null, "", `/s/${shortPath}`)
@@ -134,9 +132,7 @@ export default function Form(props) {
       ) : props.notes === "" ? (
         ""
       ) : (
-        <label
-          className={props.isShared ? "share-mode notes-label" : "notes-label"}
-        >
+        <label className={"share-mode notes-label"}>
           Notes
         </label>
       )}
