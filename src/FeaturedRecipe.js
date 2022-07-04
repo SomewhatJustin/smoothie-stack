@@ -30,7 +30,7 @@ export default function FeaturedRecipe(props) {
 
   return (
     <div className="featuredRecipe card">
-      <Smoothie fill="green" />
+      <Smoothie fill={props.color} />
       <Link to={`/s/${path}`}><h3>{title()}</h3></Link>
     </div>
   )

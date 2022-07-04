@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import Discover from "./Discover"
@@ -11,9 +11,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}></Route>
+        <Route path="/create" element={<App />}></Route>
         <Route path="/s/*" element={<App />}></Route>
-        <Route path="recipes" element={<Discover />}></Route>
+        <Route path="/recipes" element={<Discover />}></Route>
+        <Route path="*" element={<Navigate to="/create" replace />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

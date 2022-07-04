@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="App column">
-      <Navbar />
+      <Navbar startOver={startOver} />
       <h1>My Smoothie Stack</h1>
       <h2>Build your recipe and share it with a link.</h2>
       <Form

@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default function Navbar(props) {
 
   return (
     <nav>
-      <Link to="/">Create</Link>
-      <Link to="/recipes">Discover</Link>
+      <NavLink to="/create" onClick={props.startOver} className={({ isActive }) => isActive ? "active-nav" : "inactive-nav"}>Create</NavLink>
+      <NavLink to="/recipes" className={({ isActive }) => isActive ? "active-nav" : "inactive-nav"}>Discover</NavLink>
     </nav>
   )
 }

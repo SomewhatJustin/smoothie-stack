@@ -17,8 +17,10 @@ export default function Discover(props) {
       })
   }, [])
 
+  const featuredColors = ["#FFBE0B", "#FB5607", "#FF006E", "#8338EC", "#3A86FF"]
+
   const createFeaturedRecipes = () => {
-    const featuredEls = featuredList.map(item => <FeaturedRecipe key={nanoid()} path={item} />)
+    const featuredEls = featuredList.map(item => <FeaturedRecipe key={nanoid()} path={item} color={featuredColors[Math.floor(Math.random() * featuredColors.length)]} />)
     return featuredEls
   }
 
@@ -27,10 +29,12 @@ export default function Discover(props) {
     featuredListEls = createFeaturedRecipes()
   }, [featuredList])
 
+  console.log("loading")
+
   return (
-    <div className="App column">
+    <div className="App column discover">
       <Navbar />
-      <h1>Imagine a planet with smoothies.</h1>
+      <h1>Find your new favorite recipe</h1>
       <div className="recipes-container">
         {createFeaturedRecipes()}
       </div>
