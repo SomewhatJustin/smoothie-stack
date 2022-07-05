@@ -7,15 +7,13 @@ export default function FeaturedRecipe(props) {
   const [recipeObj, setRecipeObj] = useState({ ingredients: "" })
 
   const path = props.path
-  let thisRecipe = {}
 
   useEffect(() => {
     getRecipe(path)
       .then(result => {
         setRecipeObj(result)
       })
-
-  }, [])
+  }, [recipeObj])
 
   function title() {
     const ingredients = recipeObj.ingredients
@@ -33,5 +31,6 @@ export default function FeaturedRecipe(props) {
       <Smoothie fill={props.color} />
       <Link to={`/s/${path}`}><h3>{title()}</h3></Link>
     </div>
+
   )
 }

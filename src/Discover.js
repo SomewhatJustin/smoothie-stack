@@ -8,6 +8,7 @@ import { getFeaturedRecipes } from './utils'
 export default function Discover(props) {
 
   const [featuredList, setFeaturedList] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
 
   useEffect(() => {
@@ -15,28 +16,20 @@ export default function Discover(props) {
       .then(items => {
         setFeaturedList([...items])
       })
+      .then(() => {
+        setIsLoading(false)
+      })
   }, [])
 
   const featuredColors = ["#FFBE0B", "#FB5607", "#FF006E", "#8338EC", "#3A86FF"]
-
-  const createFeaturedRecipes = () => {
-    const featuredEls = featuredList.map(item => <FeaturedRecipe key={nanoid()} path={item} color={featuredColors[Math.floor(Math.random() * featuredColors.length)]} />)
-    return featuredEls
-  }
-
-  let featuredListEls = []
-  useEffect(() => {
-    featuredListEls = createFeaturedRecipes()
-  }, [featuredList])
-
-  console.log("loading")
+  const featuredEls = featuredList.map(item => <FeaturedRecipe key={nanoid()} path={item} color={featuredColors[Math.floor(Math.random() * featuredColors.length)]} />)
 
   return (
     <div className="App column discover">
       <Navbar />
       <h1>Find your new favorite recipe</h1>
       <div className="recipes-container">
-        {createFeaturedRecipes()}
+        {isLoading ? <span>Loading...</span> : featuredEls}
       </div>
     </div>
   )
