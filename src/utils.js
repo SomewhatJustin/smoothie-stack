@@ -18,7 +18,6 @@ async function getFeaturedRecipes() {
     .from('Recipes')
     .select('path', 'isFeatured')
     .eq('isFeatured', true)
-
   return Recipes.map(item => item.path)
 }
 
