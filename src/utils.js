@@ -7,7 +7,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 async function getRecipe(id) {
   let { data: Recipes, error } = await supabase
     .from('Recipes')
-    .select('recipe', 'path')
+    .select('recipe, path')
     .eq('path', id)
 
   return JSON.parse(Recipes[0].recipe)
@@ -16,9 +16,9 @@ async function getRecipe(id) {
 async function getFeaturedRecipes() {
   let { data: Recipes, error } = await supabase
     .from('Recipes')
-    .select('path', 'isFeatured')
+    .select('path, recipe')
     .eq('isFeatured', true)
-  return Recipes.map(item => item.path)
+  return Recipes
 }
 
 async function sendToDB(sharedObject, shortPath) {

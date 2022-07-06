@@ -2,7 +2,6 @@ import "./App.css"
 import Form from "./Form"
 import Footer from "./Footer"
 import Navbar from "./Navbar"
-import { nanoid } from "nanoid"
 import React from "react"
 import useItems from './hooks/useItems'
 
@@ -29,8 +28,6 @@ function App() {
     addItems()
   }
 
-
-
   // Add new items as I input new data
   React.useEffect(() => {
     if (
@@ -40,7 +37,7 @@ function App() {
     ) {
       addItems()
     }
-  }, [items, isShared])
+  }, [items, isShared, addItems])
 
   return (
     <div className="App column">

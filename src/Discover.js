@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { createClient } from '@supabase/supabase-js'
 import { nanoid } from "nanoid"
 import FeaturedRecipe from "./FeaturedRecipe";
 import { getFeaturedRecipes } from './utils'
 
 export default function Discover(props) {
 
-  const [featuredList, setFeaturedList] = useState([])
+  const [featuredList, setFeaturedList] = useState([{}])
   const [isLoading, setIsLoading] = useState(true)
 
 
@@ -22,7 +21,12 @@ export default function Discover(props) {
   }, [])
 
   const featuredColors = ["#FFBE0B", "#FB5607", "#FF006E", "#8338EC", "#3A86FF"]
-  const featuredEls = featuredList.map(item => <FeaturedRecipe key={nanoid()} path={item} color={featuredColors[Math.floor(Math.random() * featuredColors.length)]} />)
+  const featuredEls = featuredList.map(item =>
+    <FeaturedRecipe
+      key={nanoid()}
+      path={item.path}
+      color={featuredColors[Math.floor(Math.random() * featuredColors.length)]}
+      recipeObj={item.recipe} />)
 
   return (
     <div className="App column discover">

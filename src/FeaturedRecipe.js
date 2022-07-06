@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getRecipe } from "./utils";
+import React from "react";
 import { Link } from 'react-router-dom'
 import { ReactComponent as Smoothie } from './img/smoothie.svg'
 
 export default function FeaturedRecipe(props) {
-  const [recipeObj, setRecipeObj] = useState({ ingredients: "" })
-
   const path = props.path
-
-  useEffect(() => {
-    getRecipe(path)
-      .then(result => {
-        setRecipeObj(result)
-      })
-  }, [recipeObj])
+  const recipeObj = JSON.parse(props.recipeObj)
 
   function title() {
     const ingredients = recipeObj.ingredients

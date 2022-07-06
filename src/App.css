@@ -253,8 +253,9 @@ footer ul li a {
   display: grid;
   width: 100%;
   max-width: 800px;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-gap: 20px;
+  padding: 10px;
 }
 
 .featuredRecipe {
