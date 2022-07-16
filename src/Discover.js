@@ -14,6 +14,7 @@ export default function Discover(props) {
     getFeaturedRecipes()
       .then(items => {
         setFeaturedList([...items])
+        console.log(items)
       })
       .then(() => {
         setIsLoading(false)

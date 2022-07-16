@@ -4,7 +4,7 @@ import { ReactComponent as Smoothie } from './img/smoothie.svg'
 
 export default function FeaturedRecipe(props) {
   const path = props.path
-  const recipeObj = JSON.parse(props.recipeObj)
+  const recipeObj = (props.recipeObj)
 
   function title() {
     const ingredients = recipeObj.ingredients
