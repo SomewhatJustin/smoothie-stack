@@ -16,6 +16,7 @@ export default function Form(props) {
       const urlID = window.location.href.split("/s/")[1]
 
       getRecipe(urlID).then(result => {
+        console.log(result)
         let itemsArray = []
 
         for (let i = 0; i < result.ingredients.length; i++) {

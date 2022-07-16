@@ -2,7 +2,9 @@ const api = 'https://smoothie-stack-server.herokuapp.com/api'
 
 async function getRecipe(id) {
   const response = await fetch(api + `/getOne/${id}`)
-  return response.json()
+  const data = await response.json()
+  console.log(data[0].recipe)
+  return data[0].recipe
 }
 
 async function getFeaturedRecipes() {
@@ -14,13 +16,17 @@ async function getFeaturedRecipes() {
 async function sendToDB(sharedObject, shortPath) {
   const send = await fetch(api + '/post', {
     method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({
       isFeatured: false,
-      path: 'shortPath',
+      path: shortPath,
       recipe: {
-        ingredients: ["yep"],
-        amount: ["yep"],
-        notes: "NO"
+        ingredients: sharedObject.ingredients,
+        amount: sharedObject.amount,
+        notes: sharedObject.notes
       }
     })
   })
